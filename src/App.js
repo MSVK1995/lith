@@ -1,26 +1,47 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Navbar from './components/layout/Navbar';
+import { BrowserRouter, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Redirect } from "react-router";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+import HomePage from './components/homepage/HomePage';
+import SignIn from './components/auth/SignIn';
+
+
+function App(props) {
+
+  let status = false;
+  const loggedIn = props.loggedIn
+    if( loggedIn === 'success')
+      status=true
+    console.log("Logged in status",status) 
+
+    let signInNav = (
+      <div>
+          <Route path="/" component={SignIn} />
+          <Redirect from = "*" to = "/" />
+      </div>
+  );
+  let homeNav = (
+    <div>
+      <Route path = "/" component={HomePage} />
     </div>
+  )
+  return (
+    <BrowserRouter>
+    <div className="App">
+    <Navbar />
+    {status ? homeNav : signInNav}
+    </div>
+    </BrowserRouter>
   );
 }
 
-export default App;
+const mapStateToProps = (state) =>{
+  return {
+    loggedIn : state.auth.authStatus
+  }
+}
+
+export default connect(mapStateToProps)(App);
