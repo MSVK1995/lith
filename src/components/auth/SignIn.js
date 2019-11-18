@@ -25,7 +25,6 @@ class SignIn extends Component {
     render() {
         let authErr = false
         const validate = this.props.status
-    
         if(validate === 'failed')
         authErr=true
         return (
