@@ -1,12 +1,27 @@
+import axios from 'axios';
+
 export const signIn = (credentials) =>{
     return (dispatch, getState) =>{
-        if(credentials.email == 'admin@test.com' && credentials.password=='admin@1234'){
-            console.log(credentials)
-            dispatch({type: 'LOGIN_SUCCESS'})
-        }
-        else{
+
+        axios.get('https://jsonplaceholder.typicode.com/users', {
+            params: {
+                email: credentials.email,
+                username: credentials.password
+            }
+        }).then(response =>{
+            console.log(response.data)
+            if(response.data.length == 1 && response.status==200){
+                let user = response.data[0]
+                dispatch({type: 'LOGIN_SUCCESS'})
+                dispatch({type: 'USER_INFO', payload: user})
+            }
+            else{
+                dispatch({type: 'LOGIN_FAILED'})
+            }
+        }).catch(err =>{
             dispatch({type: 'LOGIN_FAILED'})
-        }
+        })
+
     }
 
 }
