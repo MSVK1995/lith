@@ -1,6 +1,6 @@
 import React from 'react';
 // import SignIn from '../auth/SignIn';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useHistory } from 'react-router-dom';
 import {Redirect} from 'react-router';
 
 import HomepageLinks from './HomepageLinks';
@@ -14,10 +14,13 @@ const HomePage = (props) => {
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/cars" component={Cars} />
         </Switch>
+
 </nav>);
+let history = useHistory();
     return (
         <div>
             {userNav}
+            {history.location.pathname === "/" ? <Dashboard /> : null}
         </div>
     )
 }

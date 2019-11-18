@@ -1,6 +1,6 @@
 export const signIn = (credentials) =>{
     return (dispatch, getState) =>{
-        if(credentials.email == 'msvk@test.com' && credentials.password=='1234'){
+        if(credentials.email == 'admin@test.com' && credentials.password=='admin@1234'){
             console.log(credentials)
             dispatch({type: 'LOGIN_SUCCESS'})
         }
