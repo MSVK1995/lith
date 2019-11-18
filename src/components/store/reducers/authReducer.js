@@ -22,7 +22,9 @@ const authReducer = (state = initState, action) =>{
             ...state, authStatus: 'out'
         };
         default:
-        return initState;
+        return {
+            ...state, authStatus: null
+        };
     }
 }
 
